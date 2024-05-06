@@ -22,6 +22,7 @@ dotenv.config();
 export const app = express();
 
 const corsOptions = {
+  origin: ["https://127.0.0.1:4000", "https://localhost:5173"],
   methods: ["GET", "POST"], // Allow GET and POST requests
   allowedHeaders: [
     "Content-Type", // Include Content-Type header

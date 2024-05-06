@@ -5,4 +5,4 @@ import { protect } from "../controller/authController";
 
 export const postRouter = express.Router();
 
-postRouter.route("/").get(protect, getAllPost).post(createPost);
+postRouter.route("/").get(getAllPost).post(createPost);
