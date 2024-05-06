@@ -92,7 +92,7 @@ export const signIn = catchAsync(
       return next(AppError("please provide correct Email or password  ", 401));
     }
     const accessToken = jwt.sign({ user }, process.env.JWT_SECRET as string, {
-      expiresIn: "10s",
+      expiresIn: "10d",
     });
 
     const refreshToken = jwt.sign(
@@ -102,7 +102,7 @@ export const signIn = catchAsync(
     );
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
-      secure: false, //https
+      secure: true, //https
       sameSite: "none", //cross site cookies
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });

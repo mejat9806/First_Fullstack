@@ -20,31 +20,26 @@ export type ExpressBasic = {
 dotenv.config();
 
 export const app = express();
-// const corsOptions = {
-//   methods: ["GET", "POST"], // Allow GET and POST requests
-//   allowedHeaders: [
-//     "set-cookie",
-//     "Content-Type",
-//     "Access-Control-Allow-Origin",
-//     "Access-Control-Allow-Credentials",
-//   ],
-//   exposedHeaders: ["Content-Length"], // Expose this custom header
-//   credentials: true, // Allow credentials (cookies, HTTP authentication)
-//   preflightContinue: false, // Do not continue if preflight request fails
-// };
-app.use(
-  cors({
-    origin: "https://localhost:5173",
-    credentials: true,
-  }),
-);
 
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Credentials", "true");
+const corsOptions = {
+  methods: ["GET", "POST"], // Allow GET and POST requests
+  allowedHeaders: [
+    "Content-Type", // Include Content-Type header
+    "set-cookie",
+    "Access-Control-Allow-Origin",
+    "Access-Control-Allow-Credentials",
+  ],
+  exposedHeaders: ["Content-Length"], // Expose this custom header
+  credentials: true, // Allow credentials (cookies, HTTP authentication)
+  preflightContinue: false, // Do not continue if preflight request fails
+};
 
-  next();
-});
+app.use(cors(corsOptions));
 
+// app.use((req, res, next) => {
+//   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+//   next();
+// });
 app.options("*", cors());
 app.use(morgan("dev"));
 app.use(cookieParser());

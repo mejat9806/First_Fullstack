@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { app } from "./src";
+import https from "https";
+import fs from "fs";
 
 const DB =
   process.env.MONGODB_URL?.replace(
@@ -14,7 +16,14 @@ async function conDB() {
     .catch((err) => err.message);
 }
 conDB();
-const port = process.env.PORT || 6000;
-app.listen(port, () => {
+
+const port = process.env.PORT || 4000;
+const httpsOptions = {
+  key: fs.readFileSync("localhost-key.pem"),
+  cert: fs.readFileSync("localhost.pem"),
+};
+
+const server = https.createServer(httpsOptions, app);
+server.listen(port, () => {
   console.log(".... listening on port " + port);
 });
